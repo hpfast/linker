@@ -15,16 +15,16 @@ chomp ($sysname = `hostname`);
 
 print "we are at $sysname\n";
 
-if ($sysname eq 'paniniu'){
-    print "executing block concerning paniniu\n";
-    $here = "/home/hans/Documents/new_logs";
-    $there = "/home/hans/hpf/documents/attentive";
+if ($sysname eq 'localhost'){
+    print "executing block concerning localhost\n";
+    $here = "path/to/local/logs";
+    $there = "/path/to/remote/logs";
     $otherhost = "snel";
-} elsif ($sysname eq 'snel'){
-    print "executing block concerning snel\n";
-    $here = "/home/hans/hpf/documents/attentive";
-    $there = "/home/hans/Documents/new_logs";
-    $otherhost = "paniniu";
+} elsif ($sysname eq 'remotehost'){
+    print "executing block concerning remotehost\n";
+    $here = "/path/to/remote/logs";
+    $there = "/path/to/local/logs";
+    $otherhost = "localhost";
 } else {
 
     print "nothing\n";
