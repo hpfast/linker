@@ -1,0 +1,52 @@
+#!/usr/bin/perl
+
+#rsync caller script for my notes files (the name 'ntsyncer' stands for 'note synchronizer')
+#2013-04-09
+
+#invoke from the command line like ntsyncer [from|to] [location]
+
+#from|to:  from syncs from the other location to here, to syncs from here outwards.
+#location is an identifier for a known location.
+#out, in, and location are hard-coded. It's relative to the machine you're running on. So this script can be installed globally and run from anywhere on the machine. I allow it to be specified so that in the future more locations could be added.
+
+#define here
+
+chomp ($sysname = `hostname`);
+
+print "we are at $sysname\n";
+
+if ($sysname eq 'paniniu'){
+    print "executing block concerning paniniu\n";
+    $here = "/home/hans/Documents/new_logs";
+    $there = "/home/hans/hpf/documents/attentive";
+    $otherhost = "snel";
+} elsif ($sysname eq 'snel'){
+    print "executing block concerning snel\n";
+    $here = "/home/hans/hpf/documents/attentive";
+    $there = "/home/hans/Documents/new_logs";
+    $otherhost = "paniniu";
+} else {
+
+    print "nothing\n";
+}
+
+
+$direction = shift @ARGV;
+print "direction is $direction\n";
+$location = shift @ARGV;
+print "location is $location\n";
+
+if ($direction eq 'from'){
+    print "executing 'from' block\n";
+    print "syncing from $location:$there to $here\n";
+    system "rsync -tviu $location:$there/*.txt $here";        
+
+} elsif ($direction eq 'to'){
+    print "executing 'to' block\n";
+    print "syncing from $here to $location:$there\n";
+    system "rsync -tviu $here/*.txt $location:$there"; #why is this not working?
+
+} else {
+
+    print "nothing\n";
+}
